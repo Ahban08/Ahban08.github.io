@@ -1,0 +1,27 @@
+const express = require('express');
+const app = express();
+const port = 3000;
+
+function calculateSum(n) {
+    return (n * (n + 1)) / 2;
+  }
+
+app.get('/data', (req, res) => {
+  const number = req.query.number;
+
+  if (!number) {
+    res.send('Lack of Parameter');
+  } else if (isNaN(number) || parseInt(number) !== parseFloat(number)) {
+    res.send('Wrong Parameter');
+  } else {
+    //If n is very large, result will be infinity.
+    const n = parseInt(number);
+    const result = calculateSum(n);
+    res.send(`The sum of numbers from 1 to ${n} is ${result}`);
+  }
+});
+
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
